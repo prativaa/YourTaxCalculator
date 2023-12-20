@@ -1,6 +1,13 @@
-<div class="container mx-auto bg-black h-full">
-<h1 class="font-bold color-white">
-    Hello world!
+<div class="container mx-auto bg-slate-200 h-full">
+<h1 class="font-extralight">
+    Tax Calculator
 </h1>
-
+<%= simple_form_for Tax.new do |f| %>
+  <%= f.input :monthly_income %>
+  <%= f.input :insurance_amount %>
+  <%= f.input :marital_status do %>
+  <%= f.select :marital_status, Tax.marital_statuses.collect { |key,value| [key.to_s.titleize, value] }, include_blank: true %>
+<% end %>
+  <%= f.button :submit, "Calculate Tax" %>
+<% end %>
 </div>
