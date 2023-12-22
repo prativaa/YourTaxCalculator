@@ -12,6 +12,7 @@
 #  updated_at       :datetime         not null
 #
 class Tax < ApplicationRecord
+	validates :monthly_income, :insurance_amount, :bonus, :marital_status, presence: true
   enum marital_status: {
     unmarried: 0,
     married: 1

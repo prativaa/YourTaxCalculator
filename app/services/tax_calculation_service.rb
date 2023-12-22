@@ -1,5 +1,5 @@
 class TaxCalculationService
-	def initialize
+	def initialize(taxable_income, base_taxable_income, income_diff, ssf_amt)
 		@taxable_income = taxable_income
 		@base_taxable_income = base_taxable_income
 		@income_diff = income_diff
@@ -7,7 +7,7 @@ class TaxCalculationService
 	end
 
 	def execute
-		self.new(taxable_income, base_taxable_income, income_diff, ssf_amt).calculate_tax
+		self.calculate_tax
 	end
 
 	private

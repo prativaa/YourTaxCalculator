@@ -1,13 +1,17 @@
-<div class="container mx-auto bg-slate-200 h-full">
+<div class="container mx-auto bg-slate-200 h-full p-20">
 <h1 class="font-extralight">
-    Tax Calculator
+  Tax Calculator
 </h1>
-<%= simple_form_for Tax.new do |f| %>
-  <%= f.input :monthly_income %>
-  <%= f.input :insurance_amount %>
-  <%= f.input :marital_status do %>
-  <%= f.select :marital_status, Tax.marital_statuses.collect { |key,value| [key.to_s.titleize, value] }, include_blank: true %>
-<% end %>
-  <%= f.button :submit, "Calculate Tax" %>
-<% end %>
+<div id="tax_form">
+	<%= simple_form_for Tax.new do |f| %>
+		<%= f.input :monthly_income %>
+		<%= f.input :bonus %>
+		<%= f.input :insurance_amount %>
+		<%= f.input :ssf_amt %>
+		<%= f.input :marital_status do %>
+			<%= f.select :marital_status, Tax.marital_statuses.collect { |key,value| [key.to_s.titleize, key] }, include_blank: true %>
+		<% end %>
+		<%= f.button :submit, "Calculate Tax", class:"btn btn-success" %>
+	<% end %>
+</div>
 </div>
