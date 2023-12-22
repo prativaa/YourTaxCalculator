@@ -1,5 +1,5 @@
 class TaxesController < ApplicationController
-	def new;
+	def index;
 	end
 
 	def create
@@ -11,6 +11,7 @@ class TaxesController < ApplicationController
 		@annual_income = @monthly_income*12
 		@total_income = (@bonus > 0) ? (@annual_income+@bonus) : @annual_income
 		
+		redirect_back_or_to taxes_path if @annual_income < 500000
 		base_taxable_income = (tax_params[:marital_status]=="married") ?  600000 : 500000
 
 		@taxable_income = @total_income-@insurance_amount-@ssf_amt
@@ -18,7 +19,6 @@ class TaxesController < ApplicationController
 
 		@result = TaxCalculationService.new(@taxable_income, base_taxable_income, income_diff, @ssf_amt).execute
 		# puts "No tax added for salary less than or equal 500000" if result==0
-			puts "Result: #{@result}"
 		respond_to do |format|
 			unless @result==0 
 				puts "Your monthly tax for monthly income of #{@monthly_income} with insurance deduction of #{@insurance_amount} is #{@result/12}"
