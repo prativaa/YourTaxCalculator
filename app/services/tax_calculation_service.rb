@@ -1,9 +1,10 @@
 class TaxCalculationService
-	def initialize(taxable_income, base_taxable_income, income_diff, ssf_amt)
+	def initialize(taxable_income, base_taxable_income, income_diff, ssf_amt, marital_status)
 		@taxable_income = taxable_income
 		@base_taxable_income = base_taxable_income
 		@income_diff = income_diff
 		@ssf_amt = ssf_amt
+		@marital_status = marital_status
 	end
 
 	def execute
@@ -21,16 +22,12 @@ class TaxCalculationService
 		taxes["0"] = {@base_taxable_income => tax}
 		puts "1% tax upto #{@base_taxable_income}: #{tax}"
 		if(@taxable_income <= @base_taxable_income )
-			puts "Taxable income: #{@taxable_income}"
-			puts "Base income: #{@base_taxable_income}"
 			@ssf_amt>0 ? (tax = 0) : (tax += (1.0/100)*@taxable_income)
-			puts "1% tax upto #{@base_taxable_income} : #{tax}"
 			tax
 			taxes["1"] = {@base_taxable_income => tax}
 		elsif (@income_diff > 0)
 			(@income_diff >= 200000 ) ? (current_amount = 200000) : (current_amount = @income_diff)
 			tax_rate=10.0
-
 			remaining_taxable_money, tax = calculate_remaining_tax(@income_diff, current_amount, tax_rate, tax)
 			taxes["10"] = {current_amount => tax}
 			return tax, taxes if remaining_taxable_money==0
@@ -43,7 +40,11 @@ class TaxCalculationService
 				return tax, taxes if remaining_taxable_money==0
 
 				if remaining_taxable_money > 0
-					(remaining_taxable_money >= 1000000 ) ? (current_amount = 1000000) : (current_amount = remaining_taxable_money)
+					if @marital_status == "unmarried"
+						(remaining_taxable_money >= 1000000 ) ? (current_amount = 1000000) : (current_amount = remaining_taxable_money)
+					else
+						(remaining_taxable_money >= 900000 ) ? (current_amount = 900000) : (current_amount = remaining_taxable_money)
+					end
 					tax_rate=30.0
 
 					remaining_taxable_money, tax = calculate_remaining_tax(remaining_taxable_money, current_amount, tax_rate, tax)
@@ -51,12 +52,20 @@ class TaxCalculationService
 					return tax, taxes if remaining_taxable_money==0
 
 					if remaining_taxable_money > 0
-						(remaining_taxable_money >= 2000000 ) ? (current_amount = 2000000) : (current_amount = remaining_taxable_money)
+						(remaining_taxable_money >= 3000000 ) ? (current_amount = 3000000) : (current_amount = remaining_taxable_money)
 						tax_rate=36.0
 
 						remaining_taxable_money, tax = calculate_remaining_tax(remaining_taxable_money, current_amount, tax_rate, tax)
 						taxes["36"] = { current_amount => tax}
 						return tax, taxes if remaining_taxable_money==0
+						if remaining_taxable_money > 0
+							current_amount = remaining_taxable_money if (remaining_taxable_money >= 5000000)
+							tax_rate=39.0
+	
+							remaining_taxable_money, tax = calculate_remaining_tax(remaining_taxable_money, current_amount, tax_rate, tax)
+							taxes["39"] = { current_amount => tax}
+							return tax, taxes
+						end
 					end
 				end
 			end
@@ -66,7 +75,6 @@ class TaxCalculationService
 
 	def calculate_remaining_tax(remaining_taxable_money, current_amount, tax_rate, tax)
 		tax += (tax_rate/100)*current_amount
-		puts "total #{tax_rate}% upto #{current_amount}: #{tax}"
 		remaining_taxable_money -= current_amount
 		return remaining_taxable_money, tax
 	end

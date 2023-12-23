@@ -20,13 +20,13 @@
 				<% previous_value = 0 %>
 				<% @taxes.each_with_index do |(key, val), index|%>
 				<tr>
-					<td><%= val.keys.first %></td>
+					<td><%= format("%.2f", val.keys.first) %></td>
 					<td><%= key %></td>
 					<td>
 						<% if previous_value.present? %>
-							<%= val.values.first - previous_value %>
+							<%= format("%.2f", (val.values.first - previous_value)) %>
 						<% else %>
-							<%= previous_value %>
+							<%= format("%.2f", previous_value) %>
 						<% end %>
 					</td>
 				</tr>
@@ -34,20 +34,20 @@
 				<% end %>
 				<tr>
 					<% total_sum = @taxes.values.sum { |val| val.keys.first } %>
-					<td><%= total_sum %></td>
+					<td><%= format("%.2f", total_sum) %></td>
 					<td></td>
-					<td><%= @result %></td>
+					<td><%= format("%.2f", @result) %></td>
 				</tr>
 				<tr>
 					<td></td>
 					<td>Net Tax Liability (Monthly):</td>
-					<td><%= @result/12 %></td>
+					<td><%= format("%.2f", @result/12) %></td>
 				</tr>
 
 				<tr>
 					<td></td>
 					<td>Net Tax Liability (Yearly):</td>
-					<td><%= @result %></td>
+					<td><%= format("%.2f", @result) %></td>
 				</tr>
 			</tbody>
 		</table>
