@@ -8,6 +8,50 @@
 		<p> Insurance amount: <%= @insurance_amount %></p>
 		<p> Bonus: <%= @bonus %> </p>
 
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">Assessible Income(Rs.)</th>
+					<th scope="col">Rate(%)</th>
+					<th scope="col">Tax(Rs.)</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% previous_value = 0 %>
+				<% @taxes.each_with_index do |(key, val), index|%>
+				<tr>
+					<td><%= val.keys.first %></td>
+					<td><%= key %></td>
+					<td>
+						<% if previous_value.present? %>
+							<%= val.values.first - previous_value %>
+						<% else %>
+							<%= previous_value %>
+						<% end %>
+					</td>
+				</tr>
+				<% previous_value = val.values.first %>
+				<% end %>
+				<tr>
+					<% total_sum = @taxes.values.sum { |val| val.keys.first } %>
+					<td><%= total_sum %></td>
+					<td></td>
+					<td><%= @result %></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>Net Tax Liability (Monthly):</td>
+					<td><%= @result/12 %></td>
+				</tr>
+
+				<tr>
+					<td></td>
+					<td>Net Tax Liability (Yearly):</td>
+					<td><%= @result %></td>
+				</tr>
+			</tbody>
+		</table>
+
 		<p> The calculated tax for this year is <%= @result%></p>
 	</div>
 	<%= link_to "Back", taxes_path, class: "btn btn-primary"%>

@@ -19,7 +19,9 @@ class TaxesController < ApplicationController
 			income_diff = @taxable_income-base_taxable_income
 		end
 
-		@result = TaxCalculationService.new(@taxable_income, base_taxable_income, income_diff, @ssf_amt).execute
+		@result, @taxes = TaxCalculationService.new(@taxable_income, base_taxable_income, income_diff, @ssf_amt).execute
+		puts "Result: #{@result}"
+		puts "Taxes: #{@taxes}"
 		# puts "No tax added for salary less than or equal 500000" if result==0
 		respond_to do |format|
 			unless @result==0 
