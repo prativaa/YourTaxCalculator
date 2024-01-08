@@ -55,9 +55,7 @@ class TaxCalculationService # rubocop:disable Style/Documentation
 
     remaining_taxable_money, tax = calculate_tax_band(39.0, tax, remaining_taxable_money, remaining_taxable_money,
                                                       taxes)
-    return tax, taxes if remaining_taxable_money.zero?
-
-    [tax, taxes]
+    [tax, taxes] if remaining_taxable_money.zero?
   end
 
   def calculate_tax_band(tax_rate, tax, limit, remaining_taxable_money, taxes)
