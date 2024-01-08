@@ -25,11 +25,9 @@ class TaxesController < ApplicationController
 		puts "Taxes: #{@taxes}"
 		# puts "No tax added for salary less than or equal 500000" if result==0
 		respond_to do |format|
-			unless @result==0 
 				puts "Your tax for monthly income of #{@monthly_income} and annual income #{@total_income} with insurance deduction of #{@insurance_amount} is #{@result}"
 				format.turbo_stream
-			end
-			format.html { redirect_to taxes_path }
+			# format.html { redirect_to taxes_path }
 		end
 	end
 
