@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class TaxesController < ApplicationController # rubocop:disable Style/Documentation
+  http_basic_authenticate_with name: 'pratibha', password: 'secret'
   def index; end
 
   def create
@@ -10,7 +11,8 @@ class TaxesController < ApplicationController # rubocop:disable Style/Documentat
                                                 @marital_status).execute
     # puts "No tax added for salary less than or equal 500000" if result==0
     respond_to do |format|
-      puts "Your tax for monthly income of #{@monthly_income} and annual income #{@total_income} with insurance deduction of #{@insurance_amount} is #{@result}"
+      flash[:notice] =
+        "Your tax for monthly income of #{@monthly_income} and annual income #{@total_income} with insurance deduction of #{@insurance_amount} is #{@result}"
       format.turbo_stream
       # format.html { redirect_to taxes_path }
     end
