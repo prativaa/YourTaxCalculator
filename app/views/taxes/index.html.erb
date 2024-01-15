@@ -1,4 +1,10 @@
-<div class="container mx-auto bg-slate-200 h-full p-20">
+<% flash.each do |type, msg| %>
+  <div class="alert alert-info mx-auto" style="max-width: 750px" data-controller="removal">
+    <%= msg %>
+  </div>
+<% end %>
+
+<div class="mx-auto bg-slate-200 h-full p-4" style="max-width: 750px">
 <h1 class="font-extralight">
   Tax Calculator
 </h1>

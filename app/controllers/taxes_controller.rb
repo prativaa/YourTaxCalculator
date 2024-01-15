@@ -5,16 +5,18 @@ class TaxesController < ApplicationController # rubocop:disable Style/Documentat
   def index; end
 
   def create
-    initialize_objects
-    calculate_taxable_income
-    @result, @taxes = TaxCalculationService.new(@taxable_income, @base_taxable_income, @income_diff, @ssf_amt,
-                                                @marital_status).execute
-    # puts "No tax added for salary less than or equal 500000" if result==0
-    respond_to do |format|
-      flash[:notice] =
-        "Your tax for monthly income of #{@monthly_income} and annual income #{@total_income} with insurance deduction of #{@insurance_amount} is #{@result}"
-      format.turbo_stream
-      # format.html { redirect_to taxes_path }
+    tax = Tax.new(tax_params)
+    if tax.valid?
+      initialize_objects
+      calculate_taxable_income
+      @result, @taxes = TaxCalculationService.new(@taxable_income, @base_taxable_income, @income_diff, @ssf_amt,
+                                                  @marital_status).execute
+      respond_to do |format|
+        format.turbo_stream
+      end
+    else
+      flash[:notice] = tax.errors.full_messages[0]
+      redirect_to taxes_path
     end
   end
 
