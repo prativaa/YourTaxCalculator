@@ -12,6 +12,8 @@ class TaxesController < ApplicationController # rubocop:disable Style/Documentat
       @result, @taxes = TaxCalculationService.new(@taxable_income, @base_taxable_income, @income_diff, @ssf_amt,
                                                   @marital_status).execute
       respond_to do |format|
+        flash.now[:notice] =
+          "Your tax for monthly income of #{@monthly_income} and annual income #{@total_income} with insurance deduction of #{@insurance_amount} is #{@result}"
         format.turbo_stream
       end
     else

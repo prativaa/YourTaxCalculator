@@ -25,6 +25,20 @@ class TaxesControllerTest < ActionDispatch::IntegrationTest
                         'Your tax for monthly income of 1000000.0 and annual income 12000000.0 with insurance deduction of 0.0 is 4195000.0')
   end
 
+  test 'should redirect back to form when monthly income is not present' do
+    post taxes_url, params: {
+      tax: {
+        monthly_income: '',
+        insurance_amount: 1000,
+        marital_status: 'unmarried',
+        ssf_amt: '',
+        bonus: ''
+      }
+    }, headers: { Authorization: ActionController::HttpAuthentication::Basic.encode_credentials('pratibha', 'secret') }, as: :turbo_stream
+
+    assert_redirected_to taxes_path
+  end
+
   private
 
   def post_tax_and_assert(monthly_income, insurance_amount, marital_status, ssf_amt, bonus, # rubocop:disable Metrics/MethodLength,Metrics/ParameterLists

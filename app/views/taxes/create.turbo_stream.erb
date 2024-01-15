@@ -1,4 +1,6 @@
-
+<%= turbo_stream.update "flash_message" do %>
+ <%= render 'shared/flash_messages' %>
+ <% end %>
 
 <%= turbo_stream.replace "tax_form" do %>
   <div id='tax_form'>
