@@ -8,8 +8,8 @@ class TaxesController < ApplicationController # rubocop:disable Style/Documentat
     tax = Tax.new(tax_params)
     if tax.valid?
       initialize_objects
-      @result, @taxes = TaxCalculationService.new(@monthly_income, @marital_status, @insurance_amount, @ssf_amt,
-                                                  @bonus).execute
+      @annual_income, @result, @taxes = TaxCalculationService.new(@monthly_income, @marital_status, @insurance_amount, @ssf_amt,
+                                                                  @bonus).execute
       respond_to do |format|
         flash.now[:notice] =
           "Your tax for monthly income of #{@monthly_income} and annual income #{@total_income} with insurance deduction of #{@insurance_amount} is #{@result}"

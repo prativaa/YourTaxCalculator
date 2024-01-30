@@ -55,6 +55,9 @@
 		</table>
 
 		<p> The calculated tax for this year is <%= @result%></p>
+		<h5> Income after Tax Deduction </h5>
+		<p> Income after tax deduction (monthly) is <%= income_after_tax("monthly", @monthly_income, @result) %></p>
+		<p> Income after tax deduction (annual) is <%= income_after_tax("yearly", @monthly_income, @result) %></p>
 	</div>
 	<%= link_to "Back", taxes_path, class: "btn btn-primary"%>
 <% end %>
