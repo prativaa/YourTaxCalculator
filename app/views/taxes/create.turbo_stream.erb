@@ -5,7 +5,7 @@
 <%= turbo_stream.replace "tax_form" do %>
   <div id='tax_form'>
 		<p> Monthly Income: <%= @monthly_income %> </p>
-		<p> Annual Income: <%= @annual_income%></p>
+		<p> Annual Income: <%= @total_income%></p>
 		<p> SSF amount: <%= @ssf_amt%></p>
 		<p> Insurance amount: <%= @insurance_amount %></p>
 		<p> Bonus: <%= @bonus %> </p>
@@ -57,7 +57,7 @@
 		<p> The calculated tax for this year is <%= @result%></p>
 		<h5> Income after Tax Deduction </h5>
 		<p> Income after tax deduction (monthly) is <%= income_after_tax("monthly", @monthly_income, @result) %></p>
-		<p> Income after tax deduction (annual) is <%= income_after_tax("yearly", @monthly_income, @result) %></p>
+		<p> Income after tax deduction (annual) is <%= income_after_tax("annual", @monthly_income, @result) %></p>
 	</div>
 	<%= link_to "Back", taxes_path, class: "btn btn-primary"%>
 <% end %>

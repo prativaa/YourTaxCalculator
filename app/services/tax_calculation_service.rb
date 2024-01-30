@@ -29,12 +29,9 @@ class TaxCalculationService
 
   def calculate_tax
     taxes = {}
-    puts "Taxable income: #{taxable_income}"
-    puts "Base taxable income: #{base_taxable_income}"
-
     if taxable_income <= base_taxable_income
       tax, taxes = calculate_base_tax(taxes, 1.0, taxable_income)
-      [annual_income, tax, taxes]
+      [total_income, tax, taxes]
     elsif income_diff.positive?
       tax, taxes = calculate_base_tax(taxes, 1.0, base_taxable_income)
       calculate_progressive_taxes(tax, taxes)
@@ -52,21 +49,21 @@ class TaxCalculationService
     remaining_taxable_money = income_diff
 
     remaining_taxable_money, tax = calculate_tax_band(10.0, tax, 200_000, remaining_taxable_money, taxes)
-    return annual_income, tax, taxes if remaining_taxable_money.zero?
+    return total_income, tax, taxes if remaining_taxable_money.zero?
 
     remaining_taxable_money, tax = calculate_tax_band(20.0, tax, 300_000, remaining_taxable_money, taxes)
-    return annual_income, tax, taxes if remaining_taxable_money.zero?
+    return total_income, tax, taxes if remaining_taxable_money.zero?
 
     remaining_taxable_money, tax = calculate_tax_band(30.0, tax, marital_status == 'unmarried' ? 1_000_000 : 900_000,
                                                       remaining_taxable_money, taxes)
-    return annual_income, tax, taxes if remaining_taxable_money.zero?
+    return total_income, tax, taxes if remaining_taxable_money.zero?
 
     remaining_taxable_money, tax = calculate_tax_band(36.0, tax, 3_000_000, remaining_taxable_money, taxes)
-    return annual_income, tax, taxes if remaining_taxable_money.zero?
+    return total_income, tax, taxes if remaining_taxable_money.zero?
 
     remaining_taxable_money, tax = calculate_tax_band(39.0, tax, remaining_taxable_money, remaining_taxable_money,
                                                       taxes)
-    [annual_income, tax, taxes] if remaining_taxable_money.zero?
+    [total_income, tax, taxes] if remaining_taxable_money.zero?
   end
 
   def calculate_tax_band(tax_rate, tax, limit, remaining_taxable_money, taxes)
