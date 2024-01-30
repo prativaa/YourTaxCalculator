@@ -1,5 +1,5 @@
 # SALARY TAX CALCULATOR FY080/081
-The salary tax 
+The salary tax band for employees in nepal for the fiscal year 2080/81 is given as below. The application calculates the salary tax with the algorithm.
 
 ![TaxBand](https://lekhapro.com/wp-content/uploads/2023/06/lekha-pro-salary-slab.jpg)  
 ## ALGORITHM TO CALCULATE SALARY TAX
@@ -25,7 +25,7 @@ The salary tax
 		calculate the **remaining_taxable_money** after each tax calculation with progressive tax bands until there is no remaining taxable money left for calculation of tax.
 	  
 		the first income difference is calculated as,
-		 
+
 		`income_diff = taxable_income - base_taxable_income`
 		
 		while calculating the progressive tax initialize the **remaining_taxable_income** as,
