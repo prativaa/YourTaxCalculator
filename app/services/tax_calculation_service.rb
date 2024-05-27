@@ -1,15 +1,16 @@
 # frozen_string_literal: true
 
 class TaxCalculationService
-  attr_reader :monthly_income, :marital_status, :insurance_amount, :ssf_amt, :bonus, :annual_income, :total_income,
+  attr_reader :monthly_income, :marital_status, :insurance_amount, :ssf_amt, :cit, :bonus, :annual_income, :total_income,
               :base_taxable_income, :taxable_income, :income_diff
 
-  def initialize(monthly_income, marital_status, insurance_amount, ssf_amt, bonus)
+  def initialize(monthly_income, marital_status, insurance_amount, ssf_amt, cit, bonus)
     @monthly_income = monthly_income
     @annual_income = monthly_income * 12
     @marital_status = marital_status
     @insurance_amount = insurance_amount
     @ssf_amt = ssf_amt
+    @cit = cit
     @bonus = bonus
     set_base_income
   end
@@ -23,7 +24,7 @@ class TaxCalculationService
   def set_base_income
     @total_income = bonus.present? ? (annual_income + bonus) : annual_income
     @base_taxable_income = marital_status == 'married' ? 600_000 : 500_000
-    @taxable_income = total_income - insurance_amount - ssf_amt
+    @taxable_income = total_income - insurance_amount - ssf_amt - cit
     @income_diff = taxable_income - base_taxable_income
   end
 

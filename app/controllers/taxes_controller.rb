@@ -8,7 +8,7 @@ class TaxesController < ApplicationController # rubocop:disable Style/Documentat
     tax = Tax.new(tax_params)
     if tax.valid?
       initialize_objects
-      @total_income, @result, @taxes = TaxCalculationService.new(@monthly_income, @marital_status, @insurance_amount, @ssf_amt,
+      @total_income, @result, @taxes = TaxCalculationService.new(@monthly_income, @marital_status, @insurance_amount, @ssf_amt, @cit,
                                                                  @bonus).execute
       respond_to do |format|
         flash.now[:notice] =
@@ -28,10 +28,11 @@ class TaxesController < ApplicationController # rubocop:disable Style/Documentat
     @monthly_income = tax_params[:monthly_income].to_f
     @insurance_amount = tax_params[:insurance_amount].to_f
     @ssf_amt = tax_params[:ssf_amt].to_f
+    @cit = tax_params[:cit].to_f
     @bonus = tax_params[:bonus].to_f
   end
 
   def tax_params
-    params.require(:tax).permit(:monthly_income, :insurance_amount, :marital_status, :ssf_amt, :bonus)
+    params.require(:tax).permit(:monthly_income, :insurance_amount, :marital_status, :ssf_amt, :cit, :bonus)
   end
 end
