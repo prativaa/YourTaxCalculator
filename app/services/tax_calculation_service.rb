@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
 class TaxCalculationService
-  attr_reader :monthly_income, :marital_status, :insurance_amount, :ssf_amt, :cit, :bonus, :annual_income, :total_income,
+  attr_reader :monthly_income, :marital_status, :insurance_amount, :fund, :cit, :bonus, :annual_income, :total_income,
               :base_taxable_income, :taxable_income, :income_diff
 
-  def initialize(monthly_income, marital_status, insurance_amount, ssf_amt, cit, bonus)
+  def initialize(monthly_income, marital_status, insurance_amount, fund, cit, bonus)
     @monthly_income = monthly_income
     @annual_income = monthly_income * 12
     @marital_status = marital_status
     @insurance_amount = insurance_amount
-    @ssf_amt = ssf_amt
+    @fund = fund
     @cit = cit
     @bonus = bonus
     set_base_income
@@ -24,7 +24,7 @@ class TaxCalculationService
   def set_base_income
     @total_income = bonus.present? ? (annual_income + bonus) : annual_income
     @base_taxable_income = marital_status == 'married' ? 600_000 : 500_000
-    @taxable_income = total_income - insurance_amount - ssf_amt - cit
+    @taxable_income = total_income - insurance_amount - fund - cit
     @income_diff = taxable_income - base_taxable_income
   end
 
@@ -40,7 +40,7 @@ class TaxCalculationService
   end
 
   def calculate_base_tax(taxes, tax_rate, taxable_income)
-    calculated_rate = ssf_amt.positive? ? 0 : (tax_rate / 100)
+    calculated_rate = fund.positive? ? 0 : (tax_rate / 100)
     tax = calculated_rate * taxable_income
     taxes[tax_rate.to_s] = { taxable_income => tax }
     [tax, taxes]

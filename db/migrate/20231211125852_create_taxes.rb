@@ -6,6 +6,7 @@ class CreateTaxes < ActiveRecord::Migration[7.1]
       t.integer :monthly_income, precision: 8, scale: 2
       t.integer :insurance_amount, precision: 8, scale: 2
       t.integer :ssf_amt, precision: 8, scale: 2
+      t.integer :epf_amt, precision: 8, scale: 2
       t.integer :cit, precision: 8, scale: 2
       t.integer :bonus, precision: 8, scale: 2
       t.integer :marital_status, default: 0

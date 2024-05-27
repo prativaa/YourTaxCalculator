@@ -15,6 +15,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_11_125852) do
     t.integer "monthly_income"
     t.integer "insurance_amount"
     t.integer "ssf_amt"
+    t.integer "epf_amt"
     t.integer "cit"
     t.integer "bonus"
     t.integer "marital_status", default: 0

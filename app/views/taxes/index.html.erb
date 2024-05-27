@@ -12,6 +12,7 @@
 		<%= f.input :bonus %>
 		<%= f.input :insurance_amount %>
 		<%= f.input :ssf_amt %>
+		<%= f.input :epf_amt %>
 		<%= f.input :cit %>
 		<%= f.input :marital_status do %>
 			<%= f.select :marital_status, Tax.marital_statuses.collect { |key,value| [key.to_s.titleize, key] }, include_blank: true %>

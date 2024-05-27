@@ -3,7 +3,7 @@ The salary tax band for employees in nepal for the fiscal year 2080/81 is given 
 
 ![TaxBand](https://lekhapro.com/wp-content/uploads/2023/06/lekha-pro-salary-slab.jpg)  
 ## ALGORITHM TO CALCULATE SALARY TAX
-* Input **monthly_income**, **insurance_amount**, **ssf_amount**, **bonus** and select the **marital_status**
+* Input **monthly_income**, **insurance_amount**, **ssf_amount**,**epf_amount, **cit_amount**, **bonus** and select the **marital_status**
 * Calculate **annual_income** and get the **total_income** 
 	* if **bonus** is present, `total_income = annual_income + bonus`
 	* else `total_income=annual_income`

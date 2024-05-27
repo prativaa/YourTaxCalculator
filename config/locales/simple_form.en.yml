@@ -10,6 +10,16 @@ en:
       # html: '<abbr title="required">*</abbr>'
     error_notification:
       default_message: "Please review the problems below:"
+    labels:
+      tax:
+        index:
+          monthly_income: Income (Monthly)
+          bonus: Bonus
+          insurance: Insurance
+          ssf_amt: SSF (Social Security Fund)
+          epf_amt: EPF (Employees Provident Fund)
+          cit: CIT( Citizen Investment Trust)
+          marital_status: Marital Status
     # Examples
     # labels:
     #   defaults:
