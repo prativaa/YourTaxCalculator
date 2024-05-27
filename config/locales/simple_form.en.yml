@@ -13,7 +13,7 @@ en:
     labels:
       tax:
         index:
-          monthly_income: Income (Monthly)
+          monthly_income: Monthly Salary
           bonus: Bonus
           insurance: Insurance
           ssf_amt: SSF (Social Security Fund)
